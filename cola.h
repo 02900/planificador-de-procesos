@@ -1,17 +1,12 @@
-//
 // cola.h
 // created by Juan Ortiz on 28/01/2017
 // Copyright c 2017 Juan Ortiz. All rights reserved
 
-
 #ifndef cola_h
 #define cola_h
 
-#include <studio.h>
+#include <stdio.h>
 #include "proceso.h"
-
-#endif /*cola_h*/
-
 
 typedef struct NodoProceso {
 	Proceso* proceso;
@@ -20,9 +15,10 @@ typedef struct NodoProceso {
 } NodoProceso;
 
 typedef struct Cola {
-	NodoProceso*  primer;
-	NodoProceso* actual;
+	NodoProceso*  primero;
+	NodoProceso* cabeza;
 	NodoProceso* ultimo;
+    int numProcesos;
 } Cola;
 
 
@@ -36,6 +32,7 @@ void Encolar (Cola* cola, Proceso* proceso);
 Proceso* Consultar (Cola* cola);
 void Eliminar (Cola* cola);
 
-Proceso* Eliminar (Cola* cola);
+Proceso* EliminarPrimero (Cola* cola);
+void EliminarProceso (Cola* cola, long pid);
 
-#endif /*cola_h*/
+#endif //cola_h

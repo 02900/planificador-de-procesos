@@ -1,10 +1,9 @@
-//
 // cola.c
 // Created by Juan Ortiz
 // Copyright c 2017 Juan Ortiz. All rights reserved
 
-#include "cola.h"
 #include <stdlib.h>
+#include "cola.h"
 
 // Operacion crear nodo
 NodoProceso* CrearNodo (Proceso* proceso) {
@@ -24,13 +23,13 @@ void DestruirNodo (NodoProceso* nodo) {
 // Operacion crear cola
 Cola* CrearCola () {
 	Cola* cola = (Cola *) malloc (sizeof (Cola));
-	cola->primer = cola->actual = cola->ultimo = NULL;
+	cola->primero = cola->cabeza = cola->ultimo = NULL;
 	return cola;
 }
 
 // Operacion destruir cola
-DestruirCola (Cola* cola) {
-	while (cola->primer)
+void DestruirCola (Cola* cola) {
+	while (cola->primero)
 		Eliminar (cola);
 	free (cola);
 }
@@ -38,8 +37,8 @@ DestruirCola (Cola* cola) {
 // Operacion anadir proceso a la cola
 void Encolar (Cola* cola, Proceso* proceso){
 	NodoProceso* nodo = CrearNodo (proceso);
-	if (!cola->primer) {
-		cola->primer = nodo;
+	if (!cola->primero) {
+		cola->primero = nodo;
 		cola->ultimo = nodo;
 	} else {
 		cola->ultimo->siguiente = nodo;
@@ -48,50 +47,51 @@ void Encolar (Cola* cola, Proceso* proceso){
 	}
 }
 
-// Operacion consultar primer proceso de la cola
+// Operacion consultar primero proceso de la cola
 Proceso* Consultar (Cola* cola) {
-	if (cola->primer) {
-		return cola->primer->proceso;
+	if (cola->primero) {
+		return cola->primero->proceso;
 	} else {
 		return NULL;
 	}
 }
 
-// Operacion eliminar primer proceso de la cola
+// Operacion eliminar primero proceso de la cola
 void Eliminar (Cola* cola) {
-	if (cola->primer) {
-		NodoProceso* eliminado = cola->primer;
-		cola->primer = cola->primer->siguiente;
+	if (cola->primero) {
+		NodoProceso* eliminado = cola->primero;
+		cola->primero = cola->primero->siguiente;
 		DestruirNodo (eliminado);
-		if (!cola->primer)
+		if (!cola->primero)
 			cola->ultimo = NULL;
 	}
 }
 
-// Operacion elminar y devolver primer proceso de la cola
-Proceso* Eliminar (Cola* cola) {
-        if (cola->primer) {
-                NodoProceso* eliminado = cola->primer;
-		Proceso* proceso = cola->primer->proceso;
-		cola->primer = cola->primer->siguiente;
-                DestruirNodo (eliminado);
-                if (!cola -> primer)
-                        cola->ultimo = NULL;
+// Operacion elminar y devolver primero proceso de la cola
+Proceso* EliminarPrimero (Cola* cola) {
+    if (cola->primero) {
+        NodoProceso* eliminado = cola->primero;
+        Proceso* proceso = cola->primero->proceso;
+        cola->primero = cola->primero->siguiente;
+        DestruirNodo (eliminado);
+        if (!cola -> primero)
+            cola->ultimo = NULL;
 		return proceso;
-        }
+    }
+    return NULL;
 }
 
 // Operacion eliminar un proceso de la cola
-void Eliminar (Cola* cola, int PID) {
-	cola->actual = cola->primer;
-	while (cola->actual) {
-		if (cola->actual->proceso->PID = PID){
-			NodoProceso* eliminado = cola->actual;
-			if (cola->actual == cola->primer) {
-				cola->primer = cola->primer->siguiente;
-				cola->primer->anterior = NULL;
+void EliminarProceso (Cola* cola, long PID) {
+	cola->cabeza = cola->primero;
+	while (cola->cabeza) {
+		if (cola->cabeza->proceso->PID == PID){
+			NodoProceso* eliminado = cola->cabeza;
+			if (cola->cabeza == cola->primero) {
+				cola->primero = cola->primero->siguiente;
+				cola->primero->anterior = NULL;
 
-			} else if (cola->actual == cola->ultimo) {
+			} else if (cola->cabeza == cola->ultimo) {
 				cola->ultimo = cola->ultimo->anterior;
 				cola->ultimo->siguiente = NULL;
 			} else {
@@ -99,9 +99,9 @@ void Eliminar (Cola* cola, int PID) {
 				eliminado->siguiente->anterior = eliminado->anterior;
 			}
 			DestruirNodo (eliminado);
-			if (!cola->primer)
+			if (!cola->primero)
 				cola->ultimo = NULL;
 		}
-		cola->actual = cola->actual->siguiente;
+		cola->cabeza = cola->cabeza->siguiente;
 	}
 }

@@ -14,9 +14,9 @@
 Proceso* CrearProceso (long pid, Estado e, short prio, float time, char *cmd) {
     Proceso* proceso = (Proceso *) malloc (sizeof (Proceso));
     proceso->PID = pid;
-    proceso->estado = 'L';
+    proceso->estado = e;
     proceso->prioridad = prio;
     proceso->time = time;
-    proceso->comando = "cmd";
+    proceso->comando = cmd;
     return proceso;
 }

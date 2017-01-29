@@ -25,10 +25,8 @@ EstrucSched* Construye(char* filename) {
     FILE* fp = fopen (filename, "r");
     
     while (fscanf(fp, "%ld %c %hd %f %s", &pid, &e, &prio, &time, cmd) != EOF) {
-        printf("%ld %c %d %f %s\n", pid, e, prio, time, cmd);
         
         Proceso* p = CrearProceso(pid, e, prio, time, cmd);
-        
         InsertarProceso(s, p, p->prioridad);
         
     }

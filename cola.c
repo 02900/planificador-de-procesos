@@ -81,6 +81,40 @@ Proceso* EliminarPrimero (Cola* cola) {
     return NULL;
 }
 
+// Operacion consultar primero proceso de la cola
+Proceso* ConsultarU (Cola* cola) {
+    if (cola->ultimo) {
+        return cola->ultimo->proceso;
+    } else {
+        return NULL;
+    }
+}
+
+// Operacion eliminar primero proceso de la cola
+void EliminarU (Cola* cola) {
+    if (cola->ultimo) {
+        NodoProceso* eliminado = cola->ultimo;
+        cola->ultimo = cola->ultimo->anterior;
+        DestruirNodo (eliminado);
+        if (!cola->ultimo)
+            cola->primero = NULL;
+    }
+}
+
+// Operacion elminar y devolver ultimo proceso de la cola
+Proceso* EliminarUltimo (Cola* cola) {
+    if (cola->ultimo) {
+        NodoProceso* eliminado = cola->ultimo;
+        Proceso* proceso = cola->ultimo->proceso;
+        cola->ultimo = cola->ultimo->anterior;
+        DestruirNodo (eliminado);
+        if (!cola -> ultimo)
+            cola->primero = NULL;
+        return proceso;
+    }
+    return NULL;
+}
+
 // Operacion eliminar un proceso de la cola
 void EliminarProceso (Cola* cola, long PID) {
 	cola->cabeza = cola->primero;
@@ -104,4 +138,15 @@ void EliminarProceso (Cola* cola, long PID) {
 		}
 		cola->cabeza = cola->cabeza->siguiente;
 	}
+}
+
+
+Proceso* DesplazarNodo (Cola* cola, NodoProceso* proceso) {
+    cola->ultimo->siguiente = cola->primero;
+    cola->primero = cola->primero->siguiente;
+    cola->ultimo = cola->ultimo->siguiente;
+    
+    cola->ultimo->proceso->estado = 'E';
+    
+    return cola->ultimo->proceso;
 }

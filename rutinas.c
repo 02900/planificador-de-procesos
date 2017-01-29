@@ -4,232 +4,142 @@
 
 #include "rutinas.h"
 
-// metodo para insertar proceso a una cola
+/*
+ Rutina que permite insertar un proceso en alguna de las de colas de prioridades
+ Parametros:
+    s es un apuntador a la estructura de colas del planificador
+    p es un apuntador a la estructura de datos perteneciente al proceso a insertar
+    prioridad es un numero del 0 al 5 que corresponde a la prioridad del procesos
+ */
 void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
-
-	Proceso *aux = NULL;
-	//printf("%d\n", prioridad);
-
-	if(prioridad == 0){
-		s->q0->numProcesos++;
-		if(s->q0->cabeza == NULL){
-			s->q0->cabeza->proceso = p;
-			s->q0->ultimo->proceso =p;
-			s->q0->cabeza->siguiente = NULL;
-			s->q0->cabeza->anterior = NULL;
-		}
-		else{
-
-			//printf("%d\n", p -> pid);
-			//printf("%c\n", p -> estado);
-			//printf("%f\n", p -> tiempo);
-			//printf("%s\n", p -> comando);
-
-			aux = s->q0->ultimo->proceso;
-			s->q0->ultimo->siguiente->proceso = p;
-			s->q0->ultimo->anterior->proceso = aux;
-
-
-			//ESTO DA ERROR
-			//printf("%d\n", s-> q0-> ultimo-> anterior -> pid);
-			//printf("%c\n", s-> q0-> ultimo-> anterior -> estado);
-			//printf("%f\n", s-> q0-> ultimo-> anterior -> tiempo);
-			//printf("%s\n", s-> q0-> ultimo-> anterior -> comando);
-		}
-		//printf("Se ha agregado el proceso con exito\n");
-	}
+    
+    // Si no se ha inicializado la estructura de colas prioridad s
+    // entonces se crean las colas q1, ..., q5
+    if (s->init == 0) {
+        s->q0 = CrearCola();
+        s->q1 = CrearCola();
+        s->q2 = CrearCola();
+        s->q3 = CrearCola();
+        s->q4 = CrearCola();
+        s->q5 = CrearCola();
+        s->init = 1;
+    }
+    
+    // El proceso se insertara de ultimo en la cola correspondiente a su prioridad
+    switch (prioridad) {
+        case 0:
+            Encolar(s->q0, p);
+            break;
+        case 1:
+            Encolar(s->q1, p);
+            break;
+        case 2:
+            Encolar(s->q2, p);
+            break;
+        case 3:
+            Encolar(s->q3, p);
+            break;
+        case 4:
+            Encolar(s->q4, p);
+            break;
+        case 5:
+            Encolar(s->q5, p);
+            break;
+        default:
+            break;
+    }
 }
 
 /*
+ Rutina que permite elminar un proceso de la estructura de colas
+ Parametros:
+    s es un apuntador a la estructura de colas del planificador
+    pid es el PID del proceso a eliminar
+    prio es un numero del 0 al 5 que corresponde a la prioridad del procesos
+ */
+void ElimProceso (EstrucSched *s, long pid, short prio) {
+    switch (prio) {
+        case 0:
+            EliminarProceso(s->q0, pid);
+            break;
+        case 1:
+            EliminarProceso(s->q1, pid);
+            break;
+        case 2:
+            EliminarProceso(s->q2, pid);
+            break;
+        case 3:
+            EliminarProceso(s->q3, pid);
+            break;
+        case 4:
+            EliminarProceso(s->q4, pid);
+            break;
+        case 5:
+            EliminarProceso(s->q5, pid);
+            break;
+        default:
+            break;
+    }
 
-// metodo para eliminar proceso de una cola
-void ElimProceso(EstrucSched *s, int pid, int prio){
-
-	long pidArgumento = pid;
-	proceso * auxProceso;
-	proceso * anteriorAux;
-	proceso * siguienteAux;
-	char *auxEstado;
-	long *auxPid;
-
-	if(prioridad == 0){
-
-		int ayuda = 0;
-
-		aux = s-> q0-> &cabeza
-		if(aux == NULL){
-			printf("No existe elementos en la cola\n");
-		}
-		if(aux != NULL){
-
-			auxEstado = aux-> estado;
-			auxPid = aux-> pid;
-
-			while(ayuda == 0){
-
-				if(auxPid == pidArgumento){
-
-					if(auxEstado == 'L'){
-						anteriorAux = aux -> anterior;
-						siguienteAux = aux -> siguiente;
-
-						aux -> anterior -> siguiente = siguienteAux;
-						aux -> siguiente -> anterior = anteriorAux;
-						printf("Se ha eliminado satifactoriamente el proceso de la cola\n");
-						return;
-
-
-					}
-					else if(auxEstado == 'E'){
-						ayuda = -1;
-						printf("El proceso sigue en ejecucion. No puede ser eliminado\n");
-					}
-
-				}
-				else{
-					aux = aux-> siguiente;
-					auxEstado = aux-> siguiente -> estado;
-					auxPid = aux -> siguiente-> pid;
-				}
-			}
-		}
-	}
 }
 
+/*
+ Rutina que permite elminar ultimo proceso de la estructura de colas ejecutado
+ Parametros:
+    s es un apuntador a la estructura de colas del planificador
+ */
 void ElimProcesoE(EstrucSched *s){
-
-	Proces *p = NULL;
-	long *pidTemp = NULL;
-	short *prioTemp = NULL;
-
-	*p = ProxProceso(&s);
-
-	*pidTemp = p-> &pid;
-	*prioTemp = p-> &prioridad;
-
-	ElimProceso(&s, &pidTemp, &prioTemp);
+    EliminarUltimo(s->enEjecucion);
 }
 
-Proceso *ProxProceso(EstrucSched *s){
+/*
+ Rutina que retorna el proximo proceso a planificar
+ Parametros:
+    s es un apuntador a la estructura de colas del planificador
+ */
+Proceso *ProxProceso(EstrucSched *s) {
+    if (s->q0->primero){
+        s->enEjecucion = s->q0;
+        return DesplazarNodo(s->q0, s->q0->primero);
+    }
+    
+    else if (s->q1->primero) {
+        s->enEjecucion = s->q1;
+        return DesplazarNodo(s->q1, s->q1->primero);
+    }
+    
+    else if (s->q2->primero) {
+        s->enEjecucion = s->q2;
+        return DesplazarNodo(s->q2, s->q2->primero);
+    }
+    
+    else if (s->q3->primero) {
+        s->enEjecucion = s->q3;
+        return DesplazarNodo(s->q3, s->q3->primero);
+    }
 
-	Proceso *p == NULL;
-	char estadoTemp;
+    else if (s->q4->primero) {
+        s->enEjecucion = s->q4;
+        return DesplazarNodo(s->q4, s->q4->primero);
+    }
 
-	int valor = s-> q0-> &numeroDeProcesos;
-	if(valor == 0){
-		valor = s-> q1-> &numeroDeProcesos;
-	}
-	else{
-		*p = s-> q0 -> &cabeza
-		estadoTemp = p-> &estado;
-		if(estado != 'L)'){
-			return *p
-		}
-		else{
-			while(p != NULL){
-				*p = s-> q0 -> cabeza -> &siguiente;
-				estadoTemp = p->& estado;
-				if(estado != 'L)'){
-					return *p
-				}
+    else if (s->q5->primero) {
+        s->enEjecucion = s->q5;
+        return DesplazarNodo(s->q5, s->q5->primero);
+    }
 
-			}
-		}
-	}
-
+    else
+        return NULL;
 }
 
-
-void CambiarEstado(EstrucSched *s, Proceso* p, char estado){
-
-}
-
-*/
-
-EstrucSched *Construye(char *filename){
-
-	//Estructuras y apuntadores
-
-	EstrucSched *s;
-	EstrucSched planificador;
-
-	Cola cola0;
-	Cola cola1;
-    Cola cola2;
-	Cola cola3;
-	Cola cola4;
-	Cola cola5;
-
-	Cola *c0;
-	Cola *c1;
-	Cola *c2;
-	Cola *c3;
-	Cola *c4;
-	Cola *c5;
-
-	FILE* archivo;
-	int pidAux;
-	char estadoAux;
-	int prioridadAux;
-	float tiempoAux;
-	char comandoAux[20];
-
-	//Inicializaciones
-
-	s = &planificador;
-	c0 = &cola0;
-	c1 = &cola1;
-	c2 = &cola2;
-	c3 = &cola3;
-	c4 = &cola4;
-	c5 = &cola5;
-
-	s-> q0 = c0;
-	s-> q1 = c1;
-	s-> q2 = c2;
-	s-> q3 = c3;
-	s-> q4 = c4;
-	s-> q5 = c5;
-
-	s-> q0-> numProcesos = 0;
-	s-> q1-> numProcesos = 0;
-	s-> q2-> numProcesos = 0;
-	s-> q3-> numProcesos = 0;
-	s-> q4-> numProcesos = 0;
-	s-> q5-> numProcesos = 0;
-
-	s-> q0-> cabeza = NULL;
-	s-> q0-> ultimo = NULL;
-	s-> q1-> cabeza = NULL;
-	s-> q1-> ultimo = NULL;
-	s-> q2-> cabeza = NULL;
-	s-> q2-> ultimo = NULL;
-	s-> q3-> cabeza = NULL;
-	s-> q3-> ultimo = NULL;
-	s-> q4-> cabeza = NULL;
-	s-> q4-> ultimo = NULL;
-	s-> q5-> cabeza = NULL;
-	s-> q5-> ultimo = NULL;
-
-
-	archivo = fopen(filename, "r");
-
-	while(fscanf(archivo, "%d %c %d %f %s", &pidAux, &estadoAux, &prioridadAux, &tiempoAux, comandoAux) != EOF){
-
-		Proceso proc;
-		Proceso *p;
-		p = &proc; 
-
-		p->PID = pidAux;
-		p->estado = estadoAux;
-		p->time = tiempoAux;
-		//p->comando = &comandoAux;
-
-		InsertarProceso(s, p, prioridadAux);
-	}
-
-	fclose(archivo);
-
-	return s;
-
+/*
+ Rutina que asigna un nuevo estado a un proceso
+ Parametros:
+    s es un apuntador a la estructura de colas del planificador
+    p es un apuntador a la estructura de datos perteneciente al proceso a modficar su estado
+    newestado es el estado que se asgina al proceso p
+ */
+void CambiarEstado (EstrucSched *s, Proceso* p, Estado newestado) {
+    s->enEjecucion = NULL;
+    p->estado = newestado;
 }

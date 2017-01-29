@@ -18,7 +18,6 @@ typedef struct Cola {
 	NodoProceso*  primero;
 	NodoProceso* cabeza;
 	NodoProceso* ultimo;
-    int numProcesos;
 } Cola;
 
 
@@ -29,10 +28,17 @@ Cola* CrearCola ();
 void DestruirCola (Cola* cola);
 
 void Encolar (Cola* cola, Proceso* proceso);
+
 Proceso* Consultar (Cola* cola);
 void Eliminar (Cola* cola);
-
 Proceso* EliminarPrimero (Cola* cola);
+
+Proceso* ConsultarU (Cola* cola);
+void EliminarU (Cola* cola);
+Proceso* EliminarUltimo (Cola* cola);
+
 void EliminarProceso (Cola* cola, long pid);
+
+Proceso* DesplazarNodo (Cola* cola, NodoProceso* proceso);
 
 #endif //cola_h

@@ -20,6 +20,4 @@ Proceso *ProxProceso(EstrucSched *s);
 
 void CambiarEstado(EstrucSched *s, Proceso* p, Estado newestado);
 
-EstrucSched *Construye(char *filename);
-
 #endif //rutinas_h

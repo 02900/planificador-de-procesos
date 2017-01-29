@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 #include "colasPrioridades.h"
+#include "rutinas.h"
 
 void menu(EstrucSched* s);
 

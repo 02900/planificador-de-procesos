@@ -10,21 +10,21 @@
 NodoProceso* CrearNodo (Proceso* proceso) {
 	NodoProceso* nodo = (NodoProceso *) malloc (sizeof (NodoProceso));
 	nodo->proceso = proceso;
-	nodo->siguiente = NULL;
+	nodo->anterior = nodo->siguiente = NULL;
 	return nodo;
 }
 
 // Operacion destruir nodo
 void DestruirNodo (NodoProceso* nodo) {
 	nodo->proceso = NULL;
-	nodo->siguiente = NULL;
+	nodo->anterior = nodo->siguiente = NULL;
 	free (nodo);
 }
 
 // Operacion crear cola
 Cola* CrearCola () {
 	Cola* cola = (Cola *) malloc (sizeof (Cola));
-	cola->primer = cola->ultimo = NULL;
+	cola->primer = cola->actual = cola->ultimo = NULL;
 	return cola;
 }
 
@@ -43,7 +43,8 @@ void Encolar (Cola* cola, Proceso* proceso){
 		cola->ultimo = nodo;
 	} else {
 		cola->ultimo->siguiente = nodo;
-		cola->ultimo = nodo;	
+		nodo->anterior = cola->ultimo;
+		cola->ultimo = nodo;
 	}
 }
 
@@ -62,7 +63,7 @@ void Eliminar (Cola* cola) {
 		NodoProceso* eliminado = cola->primer;
 		cola->primer = cola->primer->siguiente;
 		DestruirNodo (eliminado);
-		if (!cola -> primer)
+		if (!cola->primer)
 			cola->ultimo = NULL;
 	}
 }
@@ -78,4 +79,29 @@ Proceso* Eliminar (Cola* cola) {
                         cola->ultimo = NULL;
 		return proceso;
         }
+}
+
+// Operacion eliminar un proceso de la cola
+void Eliminar (Cola* cola, int PID) {
+	cola->actual = cola->primer;
+	while (cola->actual) {
+		if (cola->actual->proceso->PID = PID){
+			NodoProceso* eliminado = cola->actual;
+			if (cola->actual == cola->primer) {
+				cola->primer = cola->primer->siguiente;
+				cola->primer->anterior = NULL;
+
+			} else if (cola->actual == cola->ultimo) {
+				cola->ultimo = cola->ultimo->anterior;
+				cola->ultimo->siguiente = NULL;
+			} else {
+				eliminado->anterior->siguiente = eliminado->siguiente;
+				eliminado->siguiente->anterior = eliminado->anterior;
+			}
+			DestruirNodo (eliminado);
+			if (!cola->primer)
+				cola->ultimo = NULL;
+		}
+		cola->actual = cola->actual->siguiente;
+	}
 }

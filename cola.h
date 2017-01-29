@@ -15,11 +15,13 @@
 
 typedef struct NodoProceso {
 	Proceso* proceso;
+	struct NodoProceso* anterior;
 	struct NodoProceso* siguiente;
 } NodoProceso;
 
 typedef struct Cola {
 	NodoProceso*  primer;
+	NodoProceso* actual;
 	NodoProceso* ultimo;
 } Cola;
 

@@ -14,7 +14,6 @@ typedef struct Proceso {
 	int prioridad;
 	float time;
 	char comando [20];
-	NodoLineaProceso* lista_productos;
 } Proceso;
 
 #endif /* proceso_h */

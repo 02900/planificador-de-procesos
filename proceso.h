@@ -12,10 +12,10 @@ typedef struct Proceso {
 	Estado estado;
 	short prioridad;
 	float time;
-	char *comando;
+	char comando [20];
 } Proceso;
 
 
-Proceso* CrearProceso (long pid, Estado e, short prio, float time, char cmd);
+Proceso* CrearProceso (long pid, Estado e, short prio, float time, char* cmd);
 
 #endif /* proceso_h */

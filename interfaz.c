@@ -37,7 +37,7 @@ void menu(EstrucSched* s){
                 scanf("%ld %c %hd %f %s", &pid, &e, &prio, &time, cmd);
                 fflush(stdin);
 
-                Proceso* p = CrearProceso(pid, e, prio, time, cmd);
+                Proceso* p = CrearProceso(pid, e, prio, time, *cmd);
                 InsertarProceso(s, p, p->prioridad);
                 break;
                 

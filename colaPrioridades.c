@@ -18,13 +18,13 @@ EstrucSched* Construye(char* filename) {
     Estado e;
     short prio;
     float time;
-    char *cmd;
+    char cmd;
     
     //Proceso* p;
     
     FILE* fp = fopen (filename, "r");
     
-    while (fscanf(fp, "%ld %c %hd %f %s", &pid, &e, &prio, &time, cmd) != EOF) {
+    while (fscanf(fp, "%ld %c %hd %f %s", &pid, &e, &prio, &time, &cmd) != EOF) {
         
         Proceso* p = CrearProceso(pid, e, prio, time, cmd);
         InsertarProceso(s, p, p->prioridad);

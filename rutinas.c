@@ -49,7 +49,7 @@ void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
             break;
     }
     
-    printf("%ld %c %d %f %s\n", p->PID, p->estado, p->prioridad, p->time, p->comando);
+    //printf("%ld %c %d %f %s\n", p->PID, p->estado, p->prioridad, p->time, p->comando);
 }
 
 /*

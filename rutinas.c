@@ -49,7 +49,7 @@ void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
             break;
     }
     
-    printf("%ld %c %d %f %s\n", p->PID, p->estado, p->prioridad, p->time, p->comando);
+    //printf("%ld %c %d %f %s\n", p->PID, p->estado, p->prioridad, p->time, p->comando);
 }
 
 /*
@@ -102,37 +102,37 @@ void ElimProcesoE(EstrucSched *s){
 Proceso *ProxProceso(EstrucSched *s) {
     if (s->q0->primero){
         s->enEjecucion = s->q0;
-        CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
         return DesplazarNodo(s->q0, s->q0->primero);
     }
     
     else if (s->q1->primero) {
         s->enEjecucion = s->q1;
-        CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
         return DesplazarNodo(s->q1, s->q1->primero);
     }
     
     else if (s->q2->primero) {
         s->enEjecucion = s->q2;
-        CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
         return DesplazarNodo(s->q2, s->q2->primero);
     }
     
     else if (s->q3->primero) {
         s->enEjecucion = s->q3;
-        CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
         return DesplazarNodo(s->q3, s->q3->primero);
     }
 
     else if (s->q4->primero) {
         s->enEjecucion = s->q4;
-        CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
         return DesplazarNodo(s->q4, s->q4->primero);
     }
 
     else if (s->q5->primero) {
         s->enEjecucion = s->q5;
-        CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
         return DesplazarNodo(s->q5, s->q5->primero);
     }
 

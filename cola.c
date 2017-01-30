@@ -140,11 +140,14 @@ void EliminarProceso (Cola* cola, long PID) {
 	}
 }
 
-
+// Operacion colocar el primer nodo de la cola de ultimo en la misma
 Proceso* DesplazarNodo (Cola* cola, NodoProceso* proceso) {
     cola->ultimo->siguiente = cola->primero;
     cola->primero = cola->primero->siguiente;
     cola->ultimo = cola->ultimo->siguiente;
+    
+    cola->ultimo->siguiente = NULL;
+    cola->primero->anterior = NULL;
     
     cola->ultimo->proceso->estado = 'E';
     

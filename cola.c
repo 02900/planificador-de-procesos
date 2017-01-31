@@ -4,6 +4,7 @@
 
 #include <stdlib.h>
 #include "cola.h"
+#include "interfaz.h"
 
 // Operacion crear nodo
 NodoProceso* CrearNodo (Proceso* proceso) {
@@ -90,7 +91,7 @@ Proceso* ConsultarU (Cola* cola) {
     }
 }
 
-// Operacion eliminar primero proceso de la cola
+// Operacion eliminar ultimo proceso de la cola
 void EliminarU (Cola* cola) {
     if (cola->ultimo) {
         NodoProceso* eliminado = cola->ultimo;
@@ -141,14 +142,15 @@ void EliminarProceso (Cola* cola, long PID) {
 }
 
 // Operacion colocar el primer nodo de la cola de ultimo en la misma
-Proceso* DesplazarNodo (Cola* cola, NodoProceso* proceso) {
+Proceso* DesplazarNodo (Cola* cola) {
     cola->ultimo->siguiente = cola->primero;
-    cola->primero = cola->primero->siguiente;
+    cola->ultimo->siguiente->anterior = cola->ultimo;
     cola->ultimo = cola->ultimo->siguiente;
-    
-    cola->ultimo->siguiente = NULL;
+
+    cola->primero = cola->primero->siguiente;
     cola->primero->anterior = NULL;
-    
+    cola->ultimo->siguiente = NULL;
+
     cola->ultimo->proceso->estado = 'E';
     
     return cola->ultimo->proceso;

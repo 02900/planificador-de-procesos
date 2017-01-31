@@ -120,41 +120,44 @@ void Imprime(EstrucSched *s){
     s->q3->cabeza = s->q3->primero;
     s->q4->cabeza = s->q4->primero;
     s->q5->cabeza = s->q5->primero;
-    
-    
+        
     while (s->q0->cabeza) {
         p = s->q0->cabeza->proceso;
-        printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
+        ImprimeProceso(p);
         s->q0->cabeza = s->q0->cabeza->siguiente;
     }
     
     while (s->q1->cabeza) {
         p = s->q1->cabeza->proceso;
-        printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
+        ImprimeProceso(p);
         s->q1->cabeza = s->q1->cabeza->siguiente;
     }
     
     while (s->q2->cabeza) {
         p = s->q2->cabeza->proceso;
-        printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
+        ImprimeProceso(p);
         s->q2->cabeza = s->q2->cabeza->siguiente;
     }
     
     while (s->q3->cabeza) {
         p = s->q3->cabeza->proceso;
-        printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
+        ImprimeProceso(p);
         s->q3->cabeza = s->q3->cabeza->siguiente;
     }
     
     while (s->q4->cabeza) {
         p = s->q4->cabeza->proceso;
-        printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
+        ImprimeProceso(p);
         s->q4->cabeza = s->q4->cabeza->siguiente;
     }
     
     while (s->q5->cabeza) {
         p = s->q5->cabeza->proceso;
-        printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
+        ImprimeProceso(p);
         s->q5->cabeza = s->q5->cabeza->siguiente;
     }
+}
+
+void ImprimeProceso (Proceso* p) {
+    printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
 }

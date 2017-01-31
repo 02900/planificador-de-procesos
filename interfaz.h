@@ -17,4 +17,6 @@ void menuInterno(EstrucSched* s);
 
 void Imprime(EstrucSched *s);
 
+void ImprimeProceso (Proceso* p);
+
 #endif //interfaz_h

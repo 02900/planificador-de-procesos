@@ -91,7 +91,7 @@ void ElimProceso (EstrucSched *s, long pid, short prio) {
     s es un apuntador a la estructura de colas del planificador
  */
 void ElimProcesoE(EstrucSched *s){
-    EliminarUltimo(s->enEjecucion);
+    EliminarU(s->enEjecucion);
 }
 
 /*
@@ -103,37 +103,37 @@ Proceso *ProxProceso(EstrucSched *s) {
     if (s->q0->primero){
         s->enEjecucion = s->q0;
         //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
-        return DesplazarNodo(s->q0, s->q0->primero);
+        return DesplazarNodo(s->q0);
     }
     
     else if (s->q1->primero) {
         s->enEjecucion = s->q1;
         //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
-        return DesplazarNodo(s->q1, s->q1->primero);
+        return DesplazarNodo(s->q1);
     }
     
     else if (s->q2->primero) {
         s->enEjecucion = s->q2;
         //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
-        return DesplazarNodo(s->q2, s->q2->primero);
+        return DesplazarNodo(s->q2);
     }
     
     else if (s->q3->primero) {
         s->enEjecucion = s->q3;
         //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
-        return DesplazarNodo(s->q3, s->q3->primero);
+        return DesplazarNodo(s->q3);
     }
 
     else if (s->q4->primero) {
         s->enEjecucion = s->q4;
         //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
-        return DesplazarNodo(s->q4, s->q4->primero);
+        return DesplazarNodo(s->q4);
     }
 
     else if (s->q5->primero) {
         s->enEjecucion = s->q5;
         //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
-        return DesplazarNodo(s->q5, s->q5->primero);
+        return DesplazarNodo(s->q5);
     }
 
     else

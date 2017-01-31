@@ -39,6 +39,6 @@ Proceso* EliminarUltimo (Cola* cola);
 
 void EliminarProceso (Cola* cola, long pid);
 
-Proceso* DesplazarNodo (Cola* cola, NodoProceso* proceso);
+Proceso* DesplazarNodo (Cola* cola);
 
 #endif //cola_h

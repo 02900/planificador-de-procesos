@@ -1,4 +1,4 @@
-// rutinas.h
+// interfaz.h
 // created by Juan Ortiz on 28/01/2017
 // Copyright c 2017 Juan Ortiz. All rights reserved
 

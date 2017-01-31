@@ -1,11 +1,12 @@
+//interfaz.c
 #include "interfaz.h"
 #include "colasPrioridades.h"
 
 // Metodo que imprime opciones en la terminal
 void menu(EstrucSched* s){
-
-	int opcion=-1;
-
+    
+    int opcion=-1;
+    
     long pid;
     Estado e;
     short prio;
@@ -13,30 +14,30 @@ void menu(EstrucSched* s){
     char* cmd;
     
     printf("\nBienvenido");
-
-	while (opcion!=0) {
+    
+    while (opcion!=0) {
         printf("\nPlanificador de Procesos A&J\n");
-		printf("\n1.- Insertar proceso");
-		printf("\n2.- Eliminar proceso");
+        printf("\n1.- Insertar proceso");
+        printf("\n2.- Eliminar proceso");
         printf("\n3.- Iniciar proximo proceso");
-		printf("\n4.- Imprimir el contenido del planificador de Procesos");
-		printf("\n0.- Salir del programa");
-		printf("\n> ");
+        printf("\n4.- Imprimir el contenido del planificador de Procesos");
+        printf("\n0.- Salir del programa");
+        printf("\n> ");
         
-		scanf("%d", &opcion);
+        scanf("%d", &opcion);
         fflush(stdin);
-
+        
         switch (opcion) {
             case 0:
-                printf("Gracias por usar el planificador de Procesos A&J\n\n");
-                break;
+                printf("\n---> Gracias por usar el planificador de Procesos A&J <---\n");
+                exit(0);
                 
             case 1:
                 printf("Indique en el siguiente formato el proceso que desea agregar\n");
                 printf("PID Estado Prioridad Tiempo Comando\n");
                 scanf("%ld %c %hd %f %s", &pid, &e, &prio, &time, cmd);
                 fflush(stdin);
-
+                
                 Proceso* p = CrearProceso(pid, e, prio, time, cmd);
                 InsertarProceso(s, p, p->prioridad);
                 break;
@@ -61,7 +62,7 @@ void menu(EstrucSched* s){
 }
 
 void menuInterno(EstrucSched* s){
-   
+    
     int opcion;
     long pid;
     short prio;
@@ -73,7 +74,7 @@ void menuInterno(EstrucSched* s){
     
     scanf("%d", &opcion);
     fflush(stdin);
-
+    
     switch (opcion) {
             
         case 1:
@@ -81,7 +82,7 @@ void menuInterno(EstrucSched* s){
             printf("\n> ");
             scanf("%ld", &pid);
             fflush(stdin);
-
+            
             printf("Marque el numero correspondiente a la cola de prioridad del proceso a eliminar:\n1.- q0 \n2.- q1 \n3.- q2 \n4.- q3 \n5.- q4 \n6.- q5");
             printf("\n> ");
             scanf("%hd", &prio);
@@ -95,8 +96,11 @@ void menuInterno(EstrucSched* s){
             break;
             
         case 2:
-            ElimProcesoE(s);
-            printf("Eliminacion completada\n");
+            if (s->enEjecucion) {
+                ElimProcesoE(s);
+            }
+            else
+                printf("\nNo se ha podido realizar esta operacion.\nNo hay algun proceso en ejecucion. \nTodos los procesos estan listos para su ejecucion");
             menu(s);
             break;
             
@@ -120,7 +124,7 @@ void Imprime(EstrucSched *s){
     s->q3->cabeza = s->q3->primero;
     s->q4->cabeza = s->q4->primero;
     s->q5->cabeza = s->q5->primero;
-        
+    
     while (s->q0->cabeza) {
         p = s->q0->cabeza->proceso;
         ImprimeProceso(p);

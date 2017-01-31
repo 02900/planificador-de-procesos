@@ -163,7 +163,6 @@ Proceso* DesplazarNodo (Cola* cola) {
     cola->ultimo->siguiente = cola->primero;
     cola->ultimo->siguiente->anterior = cola->ultimo;
     cola->ultimo = cola->ultimo->siguiente;
-    
     cola->primero = cola->primero->siguiente;
     cola->primero->anterior = NULL;
     cola->ultimo->siguiente = NULL;

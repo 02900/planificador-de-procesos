@@ -48,6 +48,7 @@ void Encolar (Cola* cola, Proceso* proceso){
 	}
 }
 
+// Fuera Alcance Proyecto
 // Operacion consultar primero proceso de la cola
 Proceso* Consultar (Cola* cola) {
 	if (cola->primero) {
@@ -57,6 +58,7 @@ Proceso* Consultar (Cola* cola) {
 	}
 }
 
+// Fuera Alcance Proyecto
 // Operacion eliminar primero proceso de la cola
 void Eliminar (Cola* cola) {
 	if (cola->primero) {
@@ -68,6 +70,7 @@ void Eliminar (Cola* cola) {
 	}
 }
 
+// Fuera Alcance Prpyecto
 // Operacion elminar y devolver primero proceso de la cola
 Proceso* EliminarPrimero (Cola* cola) {
     if (cola->primero) {
@@ -82,6 +85,8 @@ Proceso* EliminarPrimero (Cola* cola) {
     return NULL;
 }
 
+
+// Fuera Alcance Proyecto
 // Operacion consultar primero proceso de la cola
 Proceso* ConsultarU (Cola* cola) {
     if (cola->ultimo) {
@@ -99,9 +104,16 @@ void EliminarU (Cola* cola) {
         DestruirNodo (eliminado);
         if (!cola->ultimo)
             cola->primero = NULL;
+        ImprimeProceso(cola->primero->proceso);
+        ImprimeProceso(cola->ultimo->proceso);
     }
 }
 
+/* 
+ Fuera del alcance del proyecto
+ 
+ No se ha probado, se piensa que debe tener error al eliminar el nodo. Ya que con este se eliminada la data del proceso tmb y no se retornara algo correcto.
+ 
 // Operacion elminar y devolver ultimo proceso de la cola
 Proceso* EliminarUltimo (Cola* cola) {
     if (cola->ultimo) {
@@ -115,6 +127,7 @@ Proceso* EliminarUltimo (Cola* cola) {
     }
     return NULL;
 }
+*/
 
 // Operacion eliminar un proceso de la cola
 void EliminarProceso (Cola* cola, long PID) {

@@ -102,37 +102,37 @@ void ElimProcesoE(EstrucSched *s){
 Proceso *ProxProceso(EstrucSched *s) {
     if (s->q0->primero){
         s->enEjecucion = s->q0;
-        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        CambiarEstado(s, s->enEjecucion->ultimo->proceso, 'L');
         return DesplazarNodo(s->q0);
     }
     
     else if (s->q1->primero) {
         s->enEjecucion = s->q1;
-        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        CambiarEstado(s, s->enEjecucion->ultimo->proceso, 'L');
         return DesplazarNodo(s->q1);
     }
     
     else if (s->q2->primero) {
         s->enEjecucion = s->q2;
-        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        CambiarEstado(s, s->enEjecucion->ultimo->proceso, 'L');
         return DesplazarNodo(s->q2);
     }
     
     else if (s->q3->primero) {
         s->enEjecucion = s->q3;
-        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        CambiarEstado(s, s->enEjecucion->ultimo->proceso, 'L');
         return DesplazarNodo(s->q3);
     }
 
     else if (s->q4->primero) {
         s->enEjecucion = s->q4;
-        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        CambiarEstado(s, s->enEjecucion->ultimo->proceso, 'L');
         return DesplazarNodo(s->q4);
     }
 
     else if (s->q5->primero) {
         s->enEjecucion = s->q5;
-        //CambiarEstado(s, s->enEjecucion->ultimo->anterior->proceso, 'L');
+        CambiarEstado(s, s->enEjecucion->ultimo->proceso, 'L');
         return DesplazarNodo(s->q5);
     }
 

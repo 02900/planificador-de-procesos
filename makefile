@@ -1,4 +1,4 @@
-all: pscheduler
+all: clean pscheduler
 
 # Esta regla compila el programa principal
 pscheduler: main.o cola.o colasPrioridades.o interfaz.o proceso.o rutinas.o

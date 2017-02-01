@@ -165,3 +165,12 @@ void Imprime(EstrucSched *s){
 void ImprimeProceso (Proceso* p) {
     printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
 }
+
+void ErrorInsertar (Proceso* p) {
+    printf ("\nOperacion fallida: el proceso no cumple con el formato admitido: ");
+    ImprimeProceso(p);
+}
+
+void ErrorElim () {
+    printf ("\nOperacion fallida: el proceso ha eliminar no existe");
+}

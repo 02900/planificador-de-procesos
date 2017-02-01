@@ -3,6 +3,7 @@
 // Copyright c 2017 Juan Ortiz. All rights reserved
 
 #include "rutinas.h"
+#include "interfaz.h"
 
 /*
  Rutina que permite insertar un proceso en alguna de las de colas de prioridades
@@ -34,6 +35,7 @@ void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
             Encolar(s->q5, p);
             break;
         default:
+            ErrorInsertar(p);
             break;
     }
     
@@ -68,6 +70,7 @@ void ElimProceso (EstrucSched *s, long pid, short prio) {
             EliminarProceso(s->q5, pid);
             break;
         default:
+            ErrorElim();
             break;
     }
     

@@ -19,4 +19,7 @@ void Imprime(EstrucSched *s);
 
 void ImprimeProceso (Proceso* p);
 
+void ErrorInsertar (Proceso* p);
+void ErrorElim ();
+
 #endif //interfaz_h

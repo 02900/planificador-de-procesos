@@ -6,7 +6,6 @@
 #define rutinas_h
 
 #include <stdlib.h>
-
 #include "proceso.h"
 #include "colasPrioridades.h"
 

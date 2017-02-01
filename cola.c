@@ -140,12 +140,9 @@ void EliminarProceso (Cola* cola, long PID) {
         if (cola->cabeza->proceso->PID == PID){
             NodoProceso* eliminado = cola->cabeza;
             if (cola->cabeza == cola->primero) {
-                cola->primero = cola->primero->siguiente;
-                cola->primero->anterior = NULL;
-                
+                cola->primero = cola->primero->siguiente;                
             } else if (cola->cabeza == cola->ultimo) {
                 cola->ultimo = cola->ultimo->anterior;
-                cola->ultimo->siguiente = NULL;
             } else {
                 eliminado->anterior->siguiente = eliminado->siguiente;
                 eliminado->siguiente->anterior = eliminado->anterior;
@@ -153,6 +150,10 @@ void EliminarProceso (Cola* cola, long PID) {
             DestruirNodo (eliminado);
             if (!cola->primero)
                 cola->ultimo = NULL;
+            else {
+                cola->ultimo->siguiente = NULL;
+                cola->primero->anterior = NULL;
+            }
         }
         cola->cabeza = cola->cabeza->siguiente;
     }

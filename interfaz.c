@@ -11,7 +11,7 @@ void menu(EstrucSched* s){
     Estado e;
     short prio;
     float time;
-    char* cmd;
+    char cmd [20];
     
     printf("\nBienvenido");
     

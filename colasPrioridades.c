@@ -13,6 +13,15 @@
 EstrucSched* Construye(char* filename) {
     EstrucSched* s = (EstrucSched *) malloc (sizeof (EstrucSched));
     
+    s->q0 = CrearCola();
+    s->q1 = CrearCola();
+    s->q2 = CrearCola();
+    s->q3 = CrearCola();
+    s->q4 = CrearCola();
+    s->q5 = CrearCola();
+    
+    s->enEjecucion = NULL;
+    
     s->init = 0;
     
     long pid;

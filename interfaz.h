@@ -5,8 +5,8 @@
 #ifndef interfaz_h
 #define interfaz_h
 
-#include <stdio.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 
 #include "colasPrioridades.h"
 #include "rutinas.h"

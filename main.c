@@ -1,4 +1,4 @@
-#include <stdio.h>
+//#include <stdio.h>
 #include "colasPrioridades.h"
 #include "interfaz.h"
 

@@ -26,7 +26,7 @@ EstrucSched* Construye(char* filename) {
     Estado e;
     short prio;
     float time;
-    char* cmd;
+    char* cmd;// NULL;
     
     //Proceso* p;
     

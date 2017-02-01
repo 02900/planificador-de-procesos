@@ -13,12 +13,6 @@
  */
 void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
     
-    // Si no se ha inicializado la estructura de colas prioridad s
-    // entonces se crean las colas q1, ..., q5
-    if (s->init == 0) {
-        s->init = 1;
-    }
-    
     // El proceso se insertara de ultimo en la cola correspondiente a su prioridad
     switch (prioridad) {
         case 0:

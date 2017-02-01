@@ -21,9 +21,7 @@ EstrucSched* Construye(char* filename) {
     s->q5 = CrearCola();
     
     s->enEjecucion = NULL;
-    
-    s->init = 0;
-    
+        
     long pid;
     Estado e;
     short prio;

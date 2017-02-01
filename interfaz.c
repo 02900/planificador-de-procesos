@@ -83,7 +83,7 @@ void menuInterno(EstrucSched* s){
             scanf("%ld", &pid);
             fflush(stdin);
             
-            printf("Marque el numero correspondiente a la cola de prioridad del proceso a eliminar:\n1.- q0 \n2.- q1 \n3.- q2 \n4.- q3 \n5.- q4 \n6.- q5");
+            printf("Marque el numero correspondiente a la cola de prioridad del proceso a eliminar:\n0.- q0 \n1.- q1 \n2.- q2 \n3.- q3 \n4.- q4 \n5.- q5");
             printf("\n> ");
             scanf("%hd", &prio);
             fflush(stdin);

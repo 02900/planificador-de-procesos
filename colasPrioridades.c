@@ -11,7 +11,8 @@
 #include "rutinas.h"
 
 EstrucSched* Construye(char* filename) {
-    EstrucSched* s;
+    EstrucSched* s = (EstrucSched *) malloc (sizeof (EstrucSched));
+    
     s->init = 0;
     
     long pid;

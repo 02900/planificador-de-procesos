@@ -1,6 +1,9 @@
-// colasPrioridades.h
-// Created by Juan Ortiz on 28/01/2017
-// Copyright c 2017 Juan Ortiz. All rights reseved.
+//  colasPrioridades.h
+//  Planificador de procesos
+//
+//  Created by Juan Ortiz & Andres Buelvas on 29/1/17.
+//  Copyright © 2017 Juan Ortiz & Andres Buelvas. All rights reserved.
+//
 
 #ifndef colasPrioridades
 #define colasPrioridades

@@ -1,6 +1,9 @@
-// rutinas.c
-// created by Juan Ortiz on 28/01/2017
-// Copyright c 2017 Juan Ortiz. All rights reserved
+//  rutinas.c
+//  Planificador de procesos
+//
+//  Created by Juan Ortiz & Andres Buelvas on 29/1/17.
+//  Copyright © 2017 Juan Ortiz & Andres Buelvas. All rights reserved.
+//
 
 #include "rutinas.h"
 #include "interfaz.h"
@@ -17,26 +20,62 @@ void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
     if(s->enEjecucion == NULL) {
         
         if (p->estado == 'L') {
-            
+            Proceso* p2 = NULL;
             switch (prioridad) {
                 case 0:
-                    Encolar(s->q0, p);
+                    p2 = consultarPID(s->q0, p->PID);
+                    if (!p2) {
+                        Encolar(s->q0, p);
+                        msg_Insercion ();
+                    } else
+                        msg_errorInsertPID (p2);
                     break;
+                    
                 case 1:
-                    Encolar(s->q1, p);
+                    p2 = consultarPID(s->q1, p->PID);
+                    if (!p2) {
+                        Encolar(s->q1, p);
+                        msg_Insercion ();
+                    } else
+                        msg_errorInsertPID (p2);
                     break;
+                    
                 case 2:
-                    Encolar(s->q2, p);
+                    p2 = consultarPID(s->q2, p->PID);
+                    if (!p2) {
+                        Encolar(s->q2, p);
+                        msg_Insercion ();
+                    } else
+                        msg_errorInsertPID (p2);
                     break;
+                    
                 case 3:
-                    Encolar(s->q3, p);
+                    p2 = consultarPID(s->q3, p->PID);
+                    if (!p2) {
+                        Encolar(s->q3, p);
+                        msg_Insercion ();
+                    } else
+                        msg_errorInsertPID (p2);
                     break;
+                    
                 case 4:
-                    Encolar(s->q4, p);
+                    p2 = consultarPID(s->q4, p->PID);
+                    if (!p2) {
+                        Encolar(s->q4, p);
+                        msg_Insercion ();
+                    } else
+                        msg_errorInsertPID (p2);
                     break;
+                    
                 case 5:
-                    Encolar(s->q5, p);
+                    p2 = consultarPID(s->q5, p->PID);
+                    if (!p2) {
+                        Encolar(s->q5, p);
+                        msg_Insercion ();
+                    } else
+                        msg_errorInsertPID (p2);
                     break;
+                    
                 default:
                     msg_ErrorInsertar(p);
                     break;

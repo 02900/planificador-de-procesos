@@ -1,6 +1,9 @@
-// interfaz.h
-// created by Juan Ortiz on 28/01/2017
-// Copyright c 2017 Juan Ortiz. All rights reserved
+//  interfaz.h
+//  Planificador de procesos
+//
+//  Created by Juan Ortiz & Andres Buelvas on 29/1/17.
+//  Copyright © 2017 Juan Ortiz & Andres Buelvas. All rights reserved.
+//
 
 #ifndef interfaz_h
 #define interfaz_h
@@ -21,8 +24,11 @@ void ImprimeProceso (Proceso* p);
 void Salir (EstrucSched *s, char* salida);
 void escribeSalida (Proceso *p, FILE* fp);
 
-void msg_estatoInvalido ();
+void LiberarMemoria (EstrucSched* s);
+
+void msg_Insercion ();
 void msg_ErrorInsertar (Proceso* p);
+void msg_errorInsertPID (Proceso* p);
 void msg_ErrorElim ();
 void msg_Busy ();
 void msg_ErrorOpenFile ();

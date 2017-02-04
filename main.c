@@ -1,4 +1,10 @@
-//#include <stdio.h>
+//  main.c
+//  Planificador de procesos
+//
+//  Created by Juan Ortiz & Andres Buelvas on 29/1/17.
+//  Copyright © 2017 Juan Ortiz & Andres Buelvas. All rights reserved.
+//
+
 #include "colasPrioridades.h"
 #include "interfaz.h"
 

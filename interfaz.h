@@ -31,6 +31,8 @@ void msg_ErrorInsertar (Proceso* p);
 void msg_errorInsertPID (Proceso* p);
 void msg_ErrorElim ();
 void msg_Busy ();
+void msg_readFile ();
+void msg_endReadFile ();
 void msg_ErrorOpenFile ();
 
 #endif //interfaz_h

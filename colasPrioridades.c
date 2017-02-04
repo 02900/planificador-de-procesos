@@ -36,14 +36,15 @@ EstrucSched* Construye(char* filename) {
     
     if(fp == NULL)
         msg_ErrorOpenFile();
+    else
+        msg_readFile();
 
     while (fscanf(fp, "%ld %c %hd %f %s", &pid, &e, &prio, &tiempo, cmd) != EOF) {
-        
         p = CrearProceso(pid, e, prio, tiempo, cmd);
         InsertarProceso(s, p, p->prioridad);
-        
     }
     
+    msg_endReadFile ();
     fclose (fp);
     
     return s;

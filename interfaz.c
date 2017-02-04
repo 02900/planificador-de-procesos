@@ -299,6 +299,14 @@ void msg_Busy () {
     printf("\nOperacion cancelada: hay un proceso en ejecucion. Detenga el proceso y vuelva a intentarlo.");
 }
 
+void msg_readFile () {
+    printf("\nInicio lectura de archivo.");
+}
+
+void msg_endReadFile () {
+    printf("\nFin lectura de archivo.");
+}
+
 void msg_ErrorOpenFile () {
     printf("\nHa ocurrido un error al cargar el archivo.\n");
     exit (0);

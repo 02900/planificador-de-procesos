@@ -6,9 +6,9 @@
 //  Copyright © 2017 Juan Tepedino. All rights reserved.
 //
 
-#include <stdio.h>
 #include "colasPrioridades.h"
 #include "rutinas.h"
+#include "interfaz.h"
 
 EstrucSched* Construye(char* filename) {
     EstrucSched* s = (EstrucSched *) malloc (sizeof (EstrucSched));
@@ -21,20 +21,23 @@ EstrucSched* Construye(char* filename) {
     s->q5 = CrearCola();
     
     s->enEjecucion = NULL;
-        
+    
     long pid;
     Estado e;
     short prio;
-    float time;
+    float tiempo;
     char cmd[20];
     
-    //Proceso* p;
+    Proceso* p;
     
     FILE* fp = fopen (filename, "r");
     
-    while (fscanf(fp, "%ld %c %hd %f %s", &pid, &e, &prio, &time, cmd) != EOF) {
+    if(fp == NULL)
+        msg_ErrorOpenFile();
+
+    while (fscanf(fp, "%ld %c %hd %f %s", &pid, &e, &prio, &tiempo, cmd) != EOF) {
         
-        Proceso* p = CrearProceso(pid, e, prio, time, cmd);
+        p = CrearProceso(pid, e, prio, tiempo, cmd);
         InsertarProceso(s, p, p->prioridad);
         
     }

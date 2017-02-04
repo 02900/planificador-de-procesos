@@ -3,54 +3,87 @@
 #include "colasPrioridades.h"
 
 // Metodo que imprime opciones en la terminal
-void menu(EstrucSched* s){
+void menu(EstrucSched* s, char* salida){
     
     int opcion=-1;
-    
     long pid;
     Estado e;
     short prio;
     float time;
     char cmd [20];
-    
-    printf("\nBienvenido");
-    
+
     while (opcion!=0) {
-        printf("\nPlanificador de Procesos A&J\n");
+        
+        printf("\n----------------------------------\nPlanificador de Procesos A&J\n----------------------------------");
+        
+        printf("\nMenu:");
         printf("\n1.- Insertar proceso");
         printf("\n2.- Eliminar proceso");
         printf("\n3.- Iniciar proximo proceso");
-        printf("\n4.- Imprimir el contenido del planificador de Procesos");
+        printf("\n4.- Detener proceso en ejecucion");
+        printf("\n5.- Imprimir el contenido del planificador de Procesos");
         printf("\n0.- Salir del programa");
-        printf("\n> ");
+        printf("\n\nIntroduzca una opcion\n>>> ");
         
-        scanf("%d", &opcion);
         fflush(stdin);
+        scanf("%d", &opcion);
         
         switch (opcion) {
             case 0:
                 printf("\n---> Gracias por usar el planificador de Procesos A&J <---\n");
+                Salir(s, salida);
                 exit(0);
                 
             case 1:
-                printf("Indique en el siguiente formato el proceso que desea agregar\n");
-                printf("PID Estado Prioridad Tiempo Comando\n");
-                scanf("%ld %c %hd %f %s", &pid, &e, &prio, &time, cmd);
+                printf("Introduzca el PID del proceso a insertar:\n>>> ");
                 fflush(stdin);
+                scanf("%ld", &pid);
+                
+                printf("\nIntroduzca el estado del proceso a insertar:\n>>> ");
+                fflush(stdin);
+                scanf(" %c", &e);
+                
+                printf("\nIntroduzca la prioridad del proceso a insertar:\n>>> ");
+                fflush(stdin);
+                scanf(" %hd", &prio);
+                
+                printf("\nIntroduzca el tiempo del proceso a insertar:\n>>> ");
+                fflush(stdin);
+                scanf(" %f", &time);
+                
+                printf("\nIntroduzca el comando del proceso a insertar:\n>>> ");
+                fflush(stdin);
+                scanf(" %s", cmd);
                 
                 Proceso* p = CrearProceso(pid, e, prio, time, cmd);
                 InsertarProceso(s, p, p->prioridad);
+                
+                if (prio >= 0 && prio <=6)
+                    printf("\n-----> Insercion completada\n");
+
                 break;
                 
             case 2:
-                menuInterno(s);
+                menuInterno(s, salida);
                 break;
                 
             case 3:
                 ProxProceso(s);
+                printf("\n-----> Proximo proceso a ejecutar asignado");
                 break;
                 
             case 4:
+                if (s->enEjecucion) {
+                    DetenerEjecucion(s);
+                    printf("\n-----> Proceso dentenido.");
+                } else
+                    printf ("\nNo hay procesos en ejecucion.");
+                
+                break;
+                
+            case 5:
+                printf("\n----------------------------------\n----------------------------------");
+                printf("\nProcesos del planificador actual\n");
                 Imprime(s);
                 break;
                 
@@ -61,7 +94,7 @@ void menu(EstrucSched* s){
     }
 }
 
-void menuInterno(EstrucSched* s){
+void menuInterno(EstrucSched* s, char* salida){
     
     int opcion;
     long pid;
@@ -70,48 +103,48 @@ void menuInterno(EstrucSched* s){
     printf("\n1.- Eliminar proceso");
     printf("\n2.- Elminar ultimo proceso ejecutado");
     printf("\n0.- Regresar al menu principal");
-    printf("\n> ");
-    
+    printf("\n\nIntroduzca una opcion\n>>> ");
+
     scanf("%d", &opcion);
     fflush(stdin);
     
     switch (opcion) {
             
         case 1:
-            printf("Introduzca el PID del proceso a eliminar");
-            printf("\n> ");
+            printf("Introduzca el PID del proceso a eliminar\n>>> ");
+            fflush(stdin);
             scanf("%ld", &pid);
-            fflush(stdin);
             
-            printf("Marque el numero correspondiente a la cola de prioridad del proceso a eliminar:\n0.- q0 \n1.- q1 \n2.- q2 \n3.- q3 \n4.- q4 \n5.- q5");
-            printf("\n> ");
-            scanf("%hd", &prio);
+            printf("Marque el numero correspondiente a la cola de prioridad del proceso a eliminar:\n\n0.- Cola 0 \n1.- Cola 1 \n2.- Cola 2 \n3.- Cola 3 \n4.- Cola 4 \n5.- Cola 5\n>>> ");
             fflush(stdin);
+            scanf("%hd", &prio);
             
             ElimProceso (s, pid, prio);
             
-            printf("Eliminacion completada\n");
+            printf("\n-----> Eliminacion completada\n");
             
-            menu(s);
+            menu(s, salida);
             break;
             
         case 2:
             if (s->enEjecucion) {
                 ElimProcesoE(s);
+                printf("\n-----> Eliminación completada");
             }
             else
-                printf("\nNo se ha podido realizar esta operacion.\nNo hay algun proceso en ejecucion. \nTodos los procesos estan listos para su ejecucion");
-            menu(s);
+                printf("\nOperacion fallida: no hay procesos en ejecucion.");
+            
+            menu(s, salida);
             break;
             
         case 0:
-            printf("Devuelta al menu principal\n");
-            menu(s);
+            printf("\nDevuelta al menu principal");
+            menu(s, salida);
             break;
             
         default:
-            printf("No ha introducido una opcion valida. Vuelva a intentarlo \n");
-            menuInterno(s);
+            printf("\nNo ha introducido una opcion valida. Vuelva a intentarlo");
+            menuInterno(s, salida);
             break;
     }
 }
@@ -163,14 +196,77 @@ void Imprime(EstrucSched *s){
 }
 
 void ImprimeProceso (Proceso* p) {
-    printf("\n%ld %c %hd %f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
+    printf("\n%ld %c %hd %.2f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
 }
 
-void ErrorInsertar (Proceso* p) {
+void Salir (EstrucSched *s, char* salida){
+    Proceso* p;
+    s->q0->cabeza = s->q0->primero;
+    s->q1->cabeza = s->q1->primero;
+    s->q2->cabeza = s->q2->primero;
+    s->q3->cabeza = s->q3->primero;
+    s->q4->cabeza = s->q4->primero;
+    s->q5->cabeza = s->q5->primero;
+    
+    FILE* fp = fopen (salida, "w");
+    
+    while (s->q0->cabeza) {
+        p = s->q0->cabeza->proceso;
+        escribeSalida(p, fp);
+        s->q0->cabeza = s->q0->cabeza->siguiente;
+    }
+    
+    while (s->q1->cabeza) {
+        p = s->q1->cabeza->proceso;
+        escribeSalida(p, fp);
+        s->q1->cabeza = s->q1->cabeza->siguiente;
+    }
+    
+    while (s->q2->cabeza) {
+        p = s->q2->cabeza->proceso;
+        escribeSalida(p, fp);
+        s->q2->cabeza = s->q2->cabeza->siguiente;
+    }
+    
+    while (s->q3->cabeza) {
+        p = s->q3->cabeza->proceso;
+        escribeSalida(p, fp);
+        s->q3->cabeza = s->q3->cabeza->siguiente;
+    }
+    
+    while (s->q4->cabeza) {
+        p = s->q4->cabeza->proceso;
+        escribeSalida(p, fp);
+        s->q4->cabeza = s->q4->cabeza->siguiente;
+    }
+    
+    while (s->q5->cabeza) {
+        p = s->q5->cabeza->proceso;
+        escribeSalida(p, fp);
+        s->q5->cabeza = s->q5->cabeza->siguiente;
+    }
+    fclose(fp);
+}
+
+void escribeSalida (Proceso *p, FILE* fp){
+    fprintf(fp, "%ld %c %hd %.2f %s\n", p->PID, p->estado, p->prioridad, p->time, p->comando);
+}
+
+void msg_ErrorInsertar (Proceso* p) {
     printf ("\nOperacion fallida: el proceso no cumple con el formato admitido: ");
+    printf("\nPID, estado, prioridad, time, comando");
     ImprimeProceso(p);
 }
 
-void ErrorElim () {
+void msg_ErrorElim () {
     printf ("\nOperacion fallida: el proceso ha eliminar no existe");
+}
+
+void msg_Busy () {
+    printf("\nOperacion cancelada: hay un proceso en ejecucion. Detenga el proceso y vuelva a intentar");
+}
+
+void msg_ErrorOpenFile () {
+    printf("\nHa ocurrido un error al cargar el archivo\n\n");
+    exit (0);
 }

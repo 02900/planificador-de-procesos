@@ -5,7 +5,6 @@
 #ifndef cola_h
 #define cola_h
 
-#include <stdio.h>
 #include "proceso.h"
 
 typedef struct NodoProceso {
@@ -19,7 +18,6 @@ typedef struct Cola {
 	NodoProceso* cabeza;
 	NodoProceso* ultimo;
 } Cola;
-
 
 NodoProceso* CrearNodo (Proceso* proceso);
 void DestruirNodo (NodoProceso* proceso);

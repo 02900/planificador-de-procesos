@@ -5,21 +5,26 @@
 #ifndef interfaz_h
 #define interfaz_h
 
-//#include <stdio.h>
-//#include <stdlib.h>
+#include <stdio.h>
 
 #include "colasPrioridades.h"
 #include "rutinas.h"
 
-void menu(EstrucSched* s);
+void menu(EstrucSched* s, char* salida);
 
-void menuInterno(EstrucSched* s);
+void menuInterno(EstrucSched* s, char* salida);
 
 void Imprime(EstrucSched *s);
 
 void ImprimeProceso (Proceso* p);
 
-void ErrorInsertar (Proceso* p);
-void ErrorElim ();
+void Salir (EstrucSched *s, char* salida);
+void escribeSalida (Proceso *p, FILE* fp);
+
+void msg_estatoInvalido ();
+void msg_ErrorInsertar (Proceso* p);
+void msg_ErrorElim ();
+void msg_Busy ();
+void msg_ErrorOpenFile ();
 
 #endif //interfaz_h

@@ -4,9 +4,9 @@
 
 int main (int argc, char** argv) 
 {
-    EstrucSched* s = NULL; //(EstrucSched *) malloc (sizeof (EstrucSched));
+    EstrucSched* s = NULL;
     s = Construye(argv[1]);
-    menu (s);
+    menu (s, argv[2]);
     
 	return 0;
 }

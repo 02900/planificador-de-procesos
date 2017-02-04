@@ -19,4 +19,5 @@ Proceso *ProxProceso(EstrucSched *s);
 
 void CambiarEstado(EstrucSched *s, Proceso* p, Estado newestado);
 
+void DetenerEjecucion (EstrucSched *s);
 #endif //rutinas_h

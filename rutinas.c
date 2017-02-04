@@ -14,32 +14,41 @@
  */
 void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
     
-    // El proceso se insertara de ultimo en la cola correspondiente a su prioridad
-    switch (prioridad) {
-        case 0:
-            Encolar(s->q0, p);
-            break;
-        case 1:
-            Encolar(s->q1, p);
-            break;
-        case 2:
-            Encolar(s->q2, p);
-            break;
-        case 3:
-            Encolar(s->q3, p);
-            break;
-        case 4:
-            Encolar(s->q4, p);
-            break;
-        case 5:
-            Encolar(s->q5, p);
-            break;
-        default:
-            ErrorInsertar(p);
-            break;
+    if(s->enEjecucion == NULL) {
+        
+        if (p->estado == 'L') {
+            
+            switch (prioridad) {
+                case 0:
+                    Encolar(s->q0, p);
+                    break;
+                case 1:
+                    Encolar(s->q1, p);
+                    break;
+                case 2:
+                    Encolar(s->q2, p);
+                    break;
+                case 3:
+                    Encolar(s->q3, p);
+                    break;
+                case 4:
+                    Encolar(s->q4, p);
+                    break;
+                case 5:
+                    Encolar(s->q5, p);
+                    break;
+                default:
+                    msg_ErrorInsertar(p);
+                    break;
+            }
+        }
+        
+        else
+            msg_ErrorInsertar(p);
     }
     
-    //printf("%ld %c %d %f %s\n", p->PID, p->estado, p->prioridad, p->time, p->comando);
+    else
+        msg_Busy ();
 }
 
 /*
@@ -70,7 +79,7 @@ void ElimProceso (EstrucSched *s, long pid, short prio) {
             EliminarProceso(s->q5, pid);
             break;
         default:
-            ErrorElim();
+            msg_ErrorElim();
             break;
     }
     
@@ -143,4 +152,9 @@ Proceso *ProxProceso(EstrucSched *s) {
  */
 void CambiarEstado (EstrucSched *s, Proceso* p, Estado newestado) {
     p->estado = newestado;
+}
+
+void DetenerEjecucion (EstrucSched* s) {
+    s->enEjecucion->ultimo->proceso->estado = 'L';
+    s->enEjecucion = NULL;
 }

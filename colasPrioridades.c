@@ -12,6 +12,14 @@
 #include "rutinas.h"
 #include "interfaz.h"
 
+/*
+Funcion que se encarga de construir el planificador de procesos a partir de un 
+ archivo de entrada, se crean las respectivas colas, con los distintos procesos
+ almacenados en el archivo.
+ Entrada filename: es una cadena de caracteres que contiene el nombre del archivo 
+         de entrada
+ Salida: un apuntador al planificador de procesos                
+*/
 EstrucSched* Construye(char* filename) {
     EstrucSched* s = (EstrucSched *) malloc (sizeof (EstrucSched));
     

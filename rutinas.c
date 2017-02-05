@@ -9,11 +9,10 @@
 #include "interfaz.h"
 
 /*
- Rutina que permite insertar un proceso en alguna de las de colas de prioridades
- Parametros:
- s es un apuntador a la estructura de colas del planificador
- p es un apuntador a la estructura de datos perteneciente al proceso a insertar
- prioridad es un numero del 0 al 5 que corresponde a la prioridad del procesos
+ Funcione que permite insertar un proceso en alguna de las de colas de prioridades
+ Entrada s: es un apuntador a la estructura de colas del planificador
+ Entrada p: es un apuntador a la estructura de datos perteneciente al proceso a insertar
+ Entrada prioridad: es un numero del 0 al 5 que corresponde a la prioridad del procesos
  */
 void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
     
@@ -91,11 +90,10 @@ void InsertarProceso(EstrucSched* s, Proceso* p, short prioridad){
 }
 
 /*
- Rutina que permite elminar un proceso de la estructura de colas
- Parametros:
- s es un apuntador a la estructura de colas del planificador
- pid es el PID del proceso a eliminar
- prio es un numero del 0 al 5 que corresponde a la prioridad del procesos
+ Funcion que permite elminar un proceso de la estructura de colas
+ Entrada s: es un apuntador a la estructura de colas del planificador
+ Entrada pid: es el identificador del proceso a eliminar
+ Entrada prio: es un numero del 0 al 5 que corresponde a la prioridad del procesos
  */
 void ElimProceso (EstrucSched *s, long pid, short prio) {
     switch (prio) {
@@ -125,9 +123,8 @@ void ElimProceso (EstrucSched *s, long pid, short prio) {
 }
 
 /*
- Rutina que permite elminar ultimo proceso de la estructura de colas ejecutado
- Parametros:
- s es un apuntador a la estructura de colas del planificador
+ Funcion que permite elminar ultimo proceso de la estructura de colas ejecutado
+ Entrada s: es un apuntador a la estructura de colas del planificador
  */
 void ElimProcesoE(EstrucSched *s) {
     EliminarU(s->enEjecucion);
@@ -135,9 +132,9 @@ void ElimProcesoE(EstrucSched *s) {
 }
 
 /*
- Rutina que retorna el proximo proceso a planificar
- Parametros:
- s es un apuntador a la estructura de colas del planificador
+ Funcion que retorna el proximo proceso a planificar
+ Entrada s: es un apuntador a la estructura de colas del planificador
+ Salida: identidicar al proximo proceso
  */
 Proceso *ProxProceso(EstrucSched *s) {
     if (s->q0->primero){
@@ -183,16 +180,19 @@ Proceso *ProxProceso(EstrucSched *s) {
 }
 
 /*
- Rutina que asigna un nuevo estado a un proceso
- Parametros:
- s es un apuntador a la estructura de colas del planificador
- p es un apuntador a la estructura de datos perteneciente al proceso a modficar su estado
- newestado es el estado que se asgina al proceso p
+ Funcion que asigna un nuevo estado a un proceso
+ Entrada s: es un apuntador a la estructura de colas del planificador
+ Enrada p: es un apuntador a la estructura de datos perteneciente al proceso a modficar su estado
+ Entrada newestado: es el estado que se asgina al proceso p
  */
 void CambiarEstado (EstrucSched *s, Proceso* p, Estado newestado) {
     p->estado = newestado;
 }
 
+/*
+ Funcion que detiene la ejecucion del proceso actual
+ Entrada s: apuntador a la estructura de colas del planificador
+*/
 void DetenerEjecucion (EstrucSched* s) {
     s->enEjecucion->ultimo->proceso->estado = 'L';
     s->enEjecucion = NULL;

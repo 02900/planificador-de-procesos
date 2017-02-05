@@ -8,7 +8,11 @@
 #include "interfaz.h"
 #include "colasPrioridades.h"
 
-// Metodo que imprime opciones en la terminal
+/*
+ Funcion que imprime el menu de oppciones del planificador de procesos,
+ Entrada s: apuntador al planificar de procesos
+ Entrada salida: nombre del archivo de salida
+*/
 void menu(EstrucSched* s, char* salida){
     
     int opcion=-1;
@@ -100,6 +104,12 @@ void menu(EstrucSched* s, char* salida){
     }
 }
 
+/*
+ Funcion que imprime las opciones del eliminar proceso(proceso cualquiera
+ o proceso en ejecucion)
+ Entrada s: apuntador al planificador de procesos
+ Entrada salida: nombre del archivo de salida
+*/
 void menuInterno(EstrucSched* s, char* salida){
     
     int opcion;
@@ -155,6 +165,11 @@ void menuInterno(EstrucSched* s, char* salida){
             break;
     }
 }
+/*
+ Funcion que permite buscar todos los procesos dentro de las colas que conforman
+ el planificador de procesos para e imprimir todos sus atributos por pantalla
+ Entrada s: puntero al planificador de procesos
+*/
 
 void Imprime(EstrucSched *s){
     Proceso* p;
@@ -202,10 +217,20 @@ void Imprime(EstrucSched *s){
     }
 }
 
+/*
+ Funcion que permite imprimir todos los atributos de un proceso
+ Entrada p: apuntador a un proceso
+*/
 void ImprimeProceso (Proceso* p) {
     printf("\n%ld %c %hd %.2f %s", p->PID, p->estado, p->prioridad, p->time, p->comando);
 }
 
+/*
+ Funcion que revisa todos los procesos de todas las colas que conforman el planificador
+ para escribir la informacion de sus atributos en el archivo de salida
+ Entrada s: apuntador al planificador de procesos
+ salida: archivo de salida de tipo String(cadena de caracteres)
+*/
 void Salir (EstrucSched *s, char* salida){
     Proceso* p;
     s->q0->cabeza = s->q0->primero;
@@ -255,10 +280,19 @@ void Salir (EstrucSched *s, char* salida){
     fclose(fp);
 }
 
+/*
+ Funcion que permite escribir en un archivo de tecto la informacion de un proceso
+ Entrada p: apuntador a un proceso
+ Entrada fp: apuntador a un estructura de tipo FILE
+*/
 void escribeSalida (Proceso *p, FILE* fp){
     fprintf(fp, "%ld %c %hd %.2f %s\n", p->PID, p->estado, p->prioridad, p->time, p->comando);
 }
 
+/*
+ Funcion que libera la memoria dinamica utilzada
+ Entrada s: apuntador a un planificador de procesos
+*/
 void LiberarMemoria (EstrucSched* s) {
     s->enEjecucion = NULL;
     DestruirCola(s->q0);
@@ -270,10 +304,18 @@ void LiberarMemoria (EstrucSched* s) {
     free(s);
 }
 
+/*
+ Funcion que permite mostrar en pantalla un mensaje de insercion exitosa
+*/
 void msg_Insercion () {
     printf("\n-----> Insercion completada\n");
 }
 
+/*
+ Funcion que permite mostrar en pantalla una serie de mensajes sobre error de 
+ insercion del proceso
+ Entrada p: apuntador a un proceso
+*/
 void msg_ErrorInsertar (Proceso* p) {
     ImprimeProceso(p);
     printf ("\nOperacion fallida: el proceso no cumple con el formato admitido: ");
@@ -285,28 +327,50 @@ void msg_ErrorInsertar (Proceso* p) {
     printf ("\ncomando: es una cadena de caracteres.");
 }
 
+/*
+ Funcion que permite mostrar en pantalla un mensaje de error de incongruencias
+ de PIDs
+ Entrada p: apuntador a un proceso
+*/
 void msg_errorInsertPID (Proceso* p) {
     printf ("\nOperacion cancelada: el siguiente proceso tiene el mismo PID.");
     ImprimeProceso(p);
     printf ("\nUtilice un PID diferente.");
 }
 
+/*
+ Funcion que permite mostrar en pantalla un mensaje de error de eliminacion
+*/
 void msg_ErrorElim () {
     printf ("\nOperacion fallida: el proceso ha eliminar no existe.");
 }
 
+/*
+ Funcion que permite mostrar en pantalla un mensaje de error de ejecucion cuando ya un proceso
+ se encuentra en ejecucion
+*/
 void msg_Busy () {
     printf("\nOperacion cancelada: hay un proceso en ejecucion. Detenga el proceso y vuelva a intentarlo.");
 }
 
+/*
+ Funcion que muestra en pantalla un mensaje que dice que el archivo se ha empezadoa a leer
+ de manera exitosa
+*/
 void msg_readFile () {
     printf("\nInicio lectura de archivo.");
 }
 
+/*
+ FUncion que muestra en pantalla cuando un archivo ha terminado de leerse
+*/
 void msg_endReadFile () {
     printf("\nFin lectura de archivo.");
 }
 
+/*
+ Funcion que muestra en panntalla un mensaje con un posible error de lectura de archivo.
+*/
 void msg_ErrorOpenFile () {
     printf("\nHa ocurrido un error al cargar el archivo.\n");
     exit (0);

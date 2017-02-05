@@ -8,7 +8,11 @@
 #include <stdlib.h>
 #include "cola.h"
 
-// Operacion crear nodo
+/*
+ Funcion que se encarga de crear un nodo a partir de procesos de entrada
+ Entrada proceso: proceso de tipo Proceso
+ Salida: retorna un nodo de tipo NodoProceso que la identifica              
+*/
 NodoProceso* CrearNodo (Proceso* proceso) {
     NodoProceso* nodo = (NodoProceso *) malloc (sizeof (NodoProceso));
     nodo->proceso = proceso;
@@ -16,28 +20,42 @@ NodoProceso* CrearNodo (Proceso* proceso) {
     return nodo;
 }
 
-// Operacion destruir nodo
+/*
+ Funcion que se encarga eliminar o destruir el proceso perteneciente al nodo
+ Entrada nodo: es rl nodo de tipo NodoProceso que queremos eliminar           
+*/
 void DestruirNodo (NodoProceso* nodo) {
     nodo->proceso = NULL;
     nodo->anterior = nodo->siguiente = NULL;
     free (nodo);
 }
 
-// Operacion crear cola
+/*
+ Funcion que se encarga de contruir un cola de prioridad en memoria dinamica
+ Salida: retorna un apuntador a una cola de prioridad            
+*/
 Cola* CrearCola () {
     Cola* cola = (Cola *) malloc (sizeof (Cola));
     cola->primero = cola->cabeza = cola->ultimo = NULL;
     return cola;
 }
 
-// Operacion destruir cola
+/*
+ Funcion que se encarga de eliminar una cola de prioridad de la memoria dinamica
+ Entrada cola: cola de prioridad del planificar de tipo Cola             
+*/
 void DestruirCola (Cola* cola) {
     while (cola->primero)
         Eliminar (cola);
     free (cola);
 }
 
-// Operacion consultar proceso en cola
+/*
+ Funcion que se encarga de consultar un proceso a traves del PID que lo identifica
+ Entrada cola: cola de prioridad del planificar de tipo Cola
+ Entrada PID: identificador del proceso.
+ Salida: un apuntador a proceso              
+*/
 Proceso* consultarPID (Cola* cola, long PID) {
     cola->cabeza = cola->primero;
     while (cola->cabeza) {
@@ -48,7 +66,13 @@ Proceso* consultarPID (Cola* cola, long PID) {
     return NULL;
 }
 
-// Operacion anadir proceso a la cola
+/*
+ Funcion que se encarga de insertar el proceso dentro de la cola de prioridad
+ asignada
+ Entrada cola
+ Entrada PID: identificador del proceso.
+ Salida: un apuntador a proceso              
+*/
 void Encolar (Cola* cola, Proceso* proceso){
     NodoProceso* nodo = CrearNodo (proceso);
     if (!cola->primero) {
@@ -61,8 +85,11 @@ void Encolar (Cola* cola, Proceso* proceso){
     }
 }
 
-// Fuera Alcance Proyecto
-// Operacion consultar primero proceso de la cola
+/*
+ Funcion que permite consultar el primer proceso de la cola
+ Entrada cola: cola de prioridad del planificador
+ Salida: apuntador al primer proceso
+*/
 Proceso* Consultar (Cola* cola) {
     if (cola->primero) {
         return cola->primero->proceso;
@@ -71,7 +98,10 @@ Proceso* Consultar (Cola* cola) {
     }
 }
 
-// Operacion eliminar primero proceso de la cola
+/*
+ Funcion que permite eliminar al primer proceso de la cola
+ Entrada cola: cola de prioridad del planificador
+*/
 void Eliminar (Cola* cola) {
     if (cola->primero) {
         NodoProceso* eliminado = cola->primero;
@@ -87,7 +117,10 @@ void Eliminar (Cola* cola) {
     }
 }
 
-// Operacion eliminar ultimo proceso de la cola
+/*
+ Funcion que permite eliminar al ultimo proceso de la cola
+ Entrada: cola de prioridad del planificador
+*/
 void EliminarU (Cola* cola) {
     if (cola->ultimo) {
         NodoProceso* eliminado = cola->ultimo;
@@ -103,7 +136,11 @@ void EliminarU (Cola* cola) {
     }
 }
 
-// Operacion elminar y devolver primero proceso de la cola
+/*
+ Funcion que permite eliminar y retornar el primer proceso de la cola
+ Entrada cola: cola de prioridad del planificador
+ Salida: apuntador al primer proceso de la cola
+*/
 Proceso* EliminarPrimero (Cola* cola) {
     if (cola->primero) {
         NodoProceso* eliminado = cola->primero;
@@ -121,7 +158,11 @@ Proceso* EliminarPrimero (Cola* cola) {
     return NULL;
 }
 
-// Operacion eliminar un proceso de la cola dado su PID
+/*
+ Funcion que permite eliminar un proceso de la cola de acuerdo a su PID
+ Entrada cola: cola de prioridad del planificador
+ Entrada PID: identificador del proceso 
+*/
 void EliminarProceso (Cola* cola, long PID) {
     cola->cabeza = cola->primero;
     NodoProceso* eliminado;
@@ -148,7 +189,12 @@ void EliminarProceso (Cola* cola, long PID) {
     }
 }
 
-// Operacion colocar el primer nodo de la cola de ultimo en la misma
+/*
+ Funcion que permite colocar al primer nodo de la cola al final del mismo
+ y se le asigna del valor de 'E' a su estado
+ Entrada cola: cola de prioridad del planificador
+ Salida: apuntador al proceso desplazado
+*/
 Proceso* DesplazarNodo (Cola* cola) {
     cola->ultimo->siguiente = cola->primero;
     cola->ultimo->siguiente->anterior = cola->ultimo;

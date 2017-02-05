@@ -10,8 +10,6 @@
 
 #include "cola.h"
 
-// Estructura de colas de prioridades del planificador
-// Es una estructura con apuntadores a las colas. 
 typedef struct EstrucSched {
 	Cola* q0;
 	Cola* q1;

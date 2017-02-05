@@ -23,18 +23,25 @@ typedef struct Cola {
 } Cola;
 
 NodoProceso* CrearNodo (Proceso* proceso);
+
 void DestruirNodo (NodoProceso* proceso);
 
 Cola* CrearCola ();
+
 void DestruirCola (Cola* cola);
 
 Proceso* consultarPID (Cola* cola, long pid);
+
 void Encolar (Cola* cola, Proceso* proceso);
 
 Proceso* Consultar (Cola* cola);
+
 void Eliminar (Cola* cola);
+
 Proceso* EliminarPrimero (Cola* cola);
+
 void EliminarU (Cola* cola);
+
 void EliminarProceso (Cola* cola, long pid);
 
 Proceso* DesplazarNodo (Cola* cola);

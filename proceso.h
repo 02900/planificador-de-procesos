@@ -18,7 +18,6 @@ typedef struct Proceso {
 	char comando [20];
 } Proceso;
 
-
 Proceso* CrearProceso (long pid, Estado e, short prio, float time, char* cmd);
 
 #endif /* proceso_h */

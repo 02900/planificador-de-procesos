@@ -1,7 +1,5 @@
 # planificador-de-procesos
-#  Created by Juan Ortiz & Andres Buelvas on 29/1/17.
-#  Copyright © 2017 Juan Ortiz & Andres Buelvas. All rights reserved.
-#
+
 Desarrollo en C de la estructura de datos y funciones asociadas para la implementación de un planificador de procesos.
 
 El archivo main.c es donde el programa inicia. En él se crea la estructura de colas de prioridades y posteriormente se inicia la ejecucion del menu.
